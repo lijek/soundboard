@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+
+    implementation 'com.github.kwhat:jnativehook:2.2.2'
+    implementation 'com.googlecode.soundlibs:mp3spi:1.9.5.4'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'Soundboard' //choroszczańskie rozwiązanie problemu uruchamialnego jara czy coś xdd
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
